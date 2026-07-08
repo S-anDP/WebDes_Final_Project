@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Sweet Crumbs Bakery</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ===========================
+         NAVBAR
+    ============================ -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bakery-nav">
+
+        <div class="container">
+
+            <a class="navbar-brand fw-bold" href="index.html">
+
+                Sweet Crumbs Bakery
+
+            </a>
+
+            <a href="index.html"
+                class="btn btn-outline-light">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Back to Shop
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- ===========================
+         CHECKOUT
+    ============================ -->
+
+    <section class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <h1 class="fw-bold">
+
+                Checkout
+
+            </h1>
+
+            <p class="text-muted">
+
+                Complete your order below.
+
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Customer Form -->
+
+            <div class="col-lg-7">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body p-4">
+
+                        <h3 class="mb-4">
+
+                            Customer Information
+
+                        </h3>
+
+                        <form id="checkoutForm">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Full Name
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    required>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Email
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    required>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Phone Number
+
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    required>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Delivery Address
+
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    rows="4"
+                                    required></textarea>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+
+                                    Payment Method
+
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    required>
+
+                                    <option value="">
+                                        Select Payment
+                                    </option>
+
+                                    <option>
+                                        Cash on Delivery
+                                    </option>
+
+                                    <option>
+                                        GCash
+                                    </option>
+
+                                    <option>
+                                        Credit/Debit Card
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <button
+                                class="btn bakery-btn btn-lg w-100"
+                                type="submit">
+
+                                Place Order
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Order Summary -->
+
+            <div class="col-lg-5">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body p-4">
+
+                        <h3 class="mb-4">
+
+                            Order Summary
+
+                        </h3>
+
+                        <div id="orderItems">
+
+                        </div>
+
+                        <hr>
+
+                        <h4>
+
+                            Total:
+                            ₱<span id="orderTotal">0</span>
+
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===========================
+         SUCCESS MODAL
+    ============================ -->
+
+    <div class="modal fade"
+        id="successModal"
+        tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title">
+
+                        Order Successful!
+
+                    </h4>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <i class="bi bi-check-circle-fill text-success"
+                        style="font-size:80px;"></i>
+
+                    <h4 class="mt-3">
+
+                        Thank You!
+
+                    </h4>
+
+                    <p>
+
+                        Your bakery order has been placed successfully.
+
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <a href="index.html"
+                        class="btn bakery-btn">
+
+                        Continue Shopping
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const orderItems = document.getElementById("orderItems");
+
+        const orderTotal = document.getElementById("orderTotal");
+
+        function loadOrder(){
+
+            orderItems.innerHTML="";
+
+            let total=0;
+
+            if(cart.length===0){
+
+                orderItems.innerHTML=
+
+                "<p class='text-muted'>No items in cart.</p>";
+
+            }
+
+            cart.forEach(item=>{
+
+                total+=item.price;
+
+                orderItems.innerHTML+=`
+
+                <div class="d-flex justify-content-between border-bottom py-2">
+
+                    <span>${item.name}</span>
+
+                    <span>₱${item.price}</span>
+
+                </div>
+
+                `;
+
+            });
+
+            orderTotal.innerText=total;
+
+        }
+
+        loadOrder();
+
+        document.getElementById("checkoutForm")
+
+        .addEventListener("submit",function(e){
+
+            e.preventDefault();
+
+            if(cart.length===0){
+
+                alert("Your cart is empty.");
+
+                return;
+
+            }
+
+            localStorage.removeItem("cart");
+
+            cart=[];
+
+            loadOrder();
+
+            let modal=new bootstrap.Modal(
+
+                document.getElementById("successModal")
+
+            );
+
+            modal.show();
+
+        });
+
+    </script>
+
+</body>
+
+</html>
