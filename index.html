@@ -42,66 +42,41 @@
 
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse" id="navbarNav">
 
-                <!-- Center Search -->
-                <form class="d-flex mx-auto w-50 my-3 my-lg-0">
+    <ul class="navbar-nav ms-auto align-items-center">
 
-                    <input class="form-control me-2"
-                        id="searchInput"
-                        type="search"
-                        placeholder="Search bread, cakes, cookies...">
+        <li class="nav-item">
 
-                </form>
+            <button class="btn btn-warning"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#cartCanvas">
 
-                <ul class="navbar-nav ms-auto align-items-center">
+                <i class="bi bi-cart-fill"></i>
 
-                    <li class="nav-item">
+                Cart
 
-                        <a class="nav-link active" href="#">Home</a>
+                <span class="badge bg-dark ms-1"
+                    id="cartCount">0</span>
 
-                    </li>
+            </button>
 
-                    <li class="nav-item">
+        </li>
 
-                        <a class="nav-link" href="#products">Products</a>
+        <li class="nav-item ms-lg-2">
 
-                    </li>
+            <a href="login.html"
+                class="btn btn-outline-light">
 
-                    <li class="nav-item">
+                Logout
 
-                        <button class="btn btn-warning ms-lg-3"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#cartCanvas">
+            </a>
 
-                            <i class="bi bi-cart-fill"></i>
+        </li>
 
-                            Cart
+    </ul>
 
-                            <span class="badge bg-dark ms-1"
-                                id="cartCount">0</span>
-
-                        </button>
-
-                    </li>
-
-                    <li class="nav-item ms-lg-2">
-
-                        <a href="login.html"
-                            class="btn btn-outline-light">
-
-                            Logout
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
+</div>
     </nav>
 
     <!-- ===========================
@@ -883,34 +858,6 @@
         }
 
         updateCart();
-
-        // SEARCH BAR
-
-        document.getElementById("searchInput").addEventListener("keyup",function(){
-
-            let value=this.value.toLowerCase();
-
-            let products=document.querySelectorAll(".product-item");
-
-            products.forEach(function(product){
-
-                let name=product.dataset.name.toLowerCase();
-
-                if(name.includes(value)){
-
-                    product.style.display="block";
-
-                }
-
-                else{
-
-                    product.style.display="none";
-
-                }
-
-            });
-
-        });
 
     </script>
 
